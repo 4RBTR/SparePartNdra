@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Sparepart Mobil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        
+        /* Navbar */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        header p {
+            font-size: 0.875rem;
+            color: #777;
+            text-align: center;
+        }
+
+        .navbar-links a {
+            padding: 10px 16px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 6px;
+            font-weight: 500;
+            margin: 0 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            background-color: #dc2626;
+            transform: scale(1.05);
+        }
+
+        /* Call to Action Section */
+        section.hero { /* Tambahkan kelas "hero" untuk membedakan bagian ini */
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5OoMHbIdqfUN7vjItCHZRHABApBJi6sGaeA&s');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .cta-container {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .cta-container h2 {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .cta-container p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.125rem;
+            max-width: 650px;
+            margin: 0 auto 20px;
+        }
+
+        .cta-container a {
+            background-color: #ef4444;
+            color: white;
+            padding: 14px 32px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .cta-container a:hover {
+            background-color: #dc2626;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cta-container h2 {
+                font-size: 2rem;
+            }
+
+            .cta-container p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Image Gallery Styles */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            object-fit: cover;
+            aspect-ratio: 16/9;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Section untuk Galeri */
+        .gallery-section {
+            padding: 40px 20px;
+            background-color: #f4f7fa;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+            <div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1>Toko Sparepart Mobil</h1>
+                    <p>
+                        Menyediakan berbagai sparepart mobil berkualitas tinggi.
+                    </p>
+                </div>
+                <div class="navbar-links flex items-center gap-4">
+                    <a href="toko.html">Toko</a>
+                    <a href="tentang.html">Tentang</a>
+                    <a href="penilaian.html">Penilaian</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <br>
+
+    <section class="hero">
+        <div class="cta-container">
+            <h2>Temukan Sparepart Mobil Terbaik!</h2>
+            <p class="hidden max-w-lg text-white/90 md:mt-6 md:block md:text-lg md:leading-relaxed">
+                Kami menyediakan berbagai sparepart mobil berkualitas tinggi dengan harga terjangkau.
+            </p>
+            <div class="mt-4 sm:mt-8">
+                <a href="toko.html">Belanja Sekarang</a>
+            </div>
+        </div>
+    </section>
+    <br>
+
+    <section class="gallery-section">
+        <div class="image-gallery">
+            <img src="" alt="LBWK BMW M4">
+            <img src="" alt="LBWK Nissan GT-R">
+            <img src="" alt="LBWK Lamborghini Huracan">
+            <img src="" alt="LB

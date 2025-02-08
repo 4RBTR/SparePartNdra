@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Sparepart Mobil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        #notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        #notification button {
+            margin-left: 10px;
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-red-500 px-4 py-3 text-white">
+        <p class="text-center text-sm font-medium">
+            Toko Sparepart Mobil
+            <a href="toko.html" class="inline-block underline"><button class="btn Checkout">Kunjungi Toko!</button></a>
+        </p>
+    </div>
+    <header class="border-b border-gray-200 bg-gray-50">
+        <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+            <div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Toko Sparepart Mobil</h1>
+                    <p class="mt-1.5 text-center text-sm text-gray-500">
+                        Menyediakan berbagai sparepart mobil berkualitas tinggi.
+                    </p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="index.html" class="inline-block rounded bg-gray-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-700">Beranda</a>
+                    <a href="keranjang.html" class="inline-block rounded bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700">Keranjang</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <br>
+    <main class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <h2 class="text-xl font-bold text-gray-900">Daftar Sparepart</h2>
+        <div class="grid grid-cols-3 gap-4 mt-4">
+        </div>
+    </main>
+
+    <div id="notification">
+        <span id="notification-text"></span>
+        <button onclick="closeNotification()">&times;</button>
+    </div>
+
+    <script>
+        const sparepartData = [{
+                nama: "Kampas Rem",
+                gambar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVG7in461LERGhyflMnGwYgcfMHtxiAaguzg&s",
+                harga: 150000,
+                produk: "kampas_rem",
+            },
+            {
+                nama: "Filter Udara",
+                gambar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv8gf-O8ceMImfoFOiuJmr5PcUgqYG5Wm0NA&s",
+                harga: 75000,
+                produk: "filter_udara",
+            },
+            {
+                nama: "Oli Mesin",
+                gambar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjxfwWD-Xv_mHLtMr29RMhjA0_9uU9qnQcVA&s",
+                harga: 100000,
+                produk: "oli_mesin",
+            },
+            {
+                nama: "Busi",
+                gambar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROJE5mZhydY6G9OyfuOw5E1BoCQMrPPn5gbQ&s",
+                harga: 50000,
+                produk: "busi",
+            },
+            {
+                nama: "Radiator",
+                gambar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTywOxcdlVGfgVddj8ipz2P8lXdG4jYgjliCQ&s",
+                harga: 300000,
+                produk: "radiator",
+            },
+            {
+                nama: "Kampas Kopling",
+                gambar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_IHDgT4cPEke_lPsdDU9k6wB0HCZCnul-ng&s",
+                harga: 200000,
+                produk: "kampas_kopling",
+            },
+        ];
+
+        const sparepartGrid = document.querySelector(".grid");
+
+        sparepartData.forEach((item) => {
+            const div = document.createElement("div");
+            div.classList.add("border", "border-gray-200", "p-4");
+            div.innerHTML = `
+                <img src="${item.gambar}" alt="${item.nama}" class="h-32 w-full object-cover mb-2" />
+                <h3 class="text-lg font-medium">${item.nama}</h3>
+                <p>Rp ${item.harga.toLocaleString()}</p>
+                <button class="beli-sekarang inline-block mt-2 rounded bg-red-600 px-4 py-2 text-white" data-produk="${item.produk}">Beli Sekarang</button>
+            `;
+            sparepartGrid.appendChild(div);
+        });
+
+        const beliSekarangButtons = document.querySelectorAll(".beli-sekarang");
+
+        beliSekarangButtons.forEach((button) => {
+            button.addEventListener("click", (event) => {
+                const produk = event.target.dataset.produk;
+
+                const produkData = sparepartData.find(item => item.produk === produk);
+
+                let keranjang = JSON.parse(localStorage.getItem('keranjang')) || [];
+                if (produkData && keranjang.length < 10) {
+                    keranjang.push(produkData);
+                    localStorage.setItem('keranjang', JSON.stringify(keranjang));
+                }
+
+                const notification = document.getElementById("notification");
+                const notificationText = document.getElementById("notification-text");
+                notificationText.textContent = produkData.nama + " telah ditambahkan ke keranjang Anda.";
+                notification.style.opacity = 1;
+
+            });
+        });
+
+        function closeNotification() {
+            const notification = document.getElementById("notification");
+            notification.style.opacity = 0;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang Belanja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to enhance the design */
+        .card {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background-color: #ffffff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .button {
+            background-color: #EF4444;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #DC2626;
+        }
+
+        .total-price {
+            font-size: 1.2rem;
+            color: #4B5563;
+            font-weight: 600;
+        }
+
+        .product-list-item {
+            background-color: #f9fafb;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex; /* Ensure flexbox for alignment */
+            align-items: center; /* Vertically center items */
+        }
+        .delete-button {
+            color: red;
+            cursor: pointer;
+            margin-left: 10px; /* Add some spacing */
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="border-b border-gray-200 bg-gray-50 shadow-md">
+        <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+            <h1 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Keranjang Belanja</h1>
+            <p class="mt-1.5 text-sm text-gray-500">Berikut adalah produk yang Anda pilih.</p>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <div id="keranjang" class="grid grid-cols-1 gap-6 mt-4">
+            </div>
+        <div class="mt-6">
+            <p class="text-lg font-medium text-gray-700">Total Harga: <span id="total-harga" class="font-bold total-price">Rp 0</span></p>
+        </div>
+        <div class="mt-6">
+            <a href="toko.html" class="button">Lanjut Belanja</a>
+        </div>
+    </main>
+
+    <script>
+        // Harga masing-masing produk
+        const hargaProduk = {
+            kampas_rem: 150000,
+            filter_udara: 75000,
+            oli_mesin: 100000,
+            busi: 50000,
+            radiator: 300000,
+            kampas_kopling: 200000
+        };
+
+        // Ambil parameter produk dari URL
+        const params = new URLSearchParams(window.location.search);
+        let produk = params.get('produk');
+
+        // Simpan produk yang ada di keranjang
+        let keranjang = JSON.parse(localStorage.getItem('keranjang')) || [];
+
+        // Fungsi untuk menambahkan produk ke keranjang
+        function addToCart(produk) {
+            if (produk && keranjang.length < 10) {
+                keranjang.push({
+                    produk: produk,
+                    harga: hargaProduk[produk]
+                });
+                localStorage.setItem('keranjang', JSON.stringify(keranjang));
+                renderCart();
+            }
+        }
+
+        // Render keranjang
+        function renderCart() {
+            const keranjangDiv = document.getElementById('keranjang');
+            keranjangDiv.innerHTML = ''; // Reset keranjang
+
+            let totalHarga = 0;
+            keranjang.forEach((item, index) => {
+                totalHarga += item.harga;
+
+                // Create product card
+                const productCard = document.createElement('div');
+                productCard.classList.add('card', 'p-4', 'flex', 'items-center', 'justify-between');
+
+                productCard.innerHTML = `
+                    <div class="product-list-item">
+                        <p class="mr-4 text-lg text-gray-800">${index + 1}. ${item.produk.replace('_', ' ').toUpperCase()}</p>
+                        <p class="font-medium text-green-600">Rp ${item.harga.toLocaleString()}</p>
+                        <span class="delete-button" data-index="${index}">&times;</span> </div>
+                `;
+
+                keranjangDiv.appendChild(productCard);
+            });
+
+            // Update total harga
+            document.getElementById('total-harga').innerText = `Rp ${totalHarga.toLocaleString()}`;
+
+            // Add event listeners for delete buttons *after* rendering
+            const deleteButtons = document.querySelectorAll('.delete-button');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', handleDelete);
+            });
+        }
+
+        function handleDelete(event) {
+            const index = event.target.dataset.index;
+            keranjang.splice(index, 1); // Remove item from array
+            localStorage.setItem('keranjang', JSON.stringify(keranjang)); // Update local storage
+            renderCart(); // Re-render the cart
+        }
+
+
+        // Add the product from the URL to the cart
+        if (produk) {
+            addToCart(produk);
+        } else {
+            renderCart();
+        }
+
+    </script>
+</body>
+</html>
